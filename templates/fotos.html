@@ -37,13 +37,20 @@
 
 {% for arquivo in arquivos %}
 
+<a
+    href="{{ url_for('mostrar_foto', filename=arquivo) }}"
+    target="_blank"
+    rel="noopener noreferrer"
+>
     <img
         src="{{ url_for('mostrar_foto', filename=arquivo) }}"
         style="
             width:100%;
             border:4px solid #111;
+            cursor:pointer;
         "
     >
+</a>
 
 {% else %}
 
