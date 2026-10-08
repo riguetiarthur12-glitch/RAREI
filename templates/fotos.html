@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Fotos - R.A.R.E.I</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<header class="topo">
+
+    <h1>R.A.R.E.I</h1>
+
+</header>
+
+
+<h2 style="text-align:center; margin:30px;">
+    Fotos capturadas
+</h2>
+
+
+<div style="
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+    gap:20px;
+    padding:30px;
+">
+
+{% for arquivo in arquivos %}
+
+    <img
+        src="{{ url_for('mostrar_foto', filename=arquivo) }}"
+        style="
+            width:100%;
+            border:4px solid #111;
+        "
+    >
+
+{% else %}
+
+    <p>Nenhuma foto recebida ainda.</p>
+
+{% endfor %}
+
+</div>
+
+
+</body>
+
+</html>
