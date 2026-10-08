@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>R.A.R.E.I</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+
+    <header class="topo">
+        <h1>R.A.R.E.I</h1>
+    </header>
+
+    <main class="painel">
+
+        <!-- FOTOS -->
+        <a href="/fotos" class="bloco fotos">
+            <span>Fotos</span>
+        </a>
+
+        <section class="lado-direito">
+
+            <!-- CATÁLOGO -->
+            <a href="/catalogo" class="bloco catalogo">
+                <span>Catálogo</span>
+            </a>
+
+            <!-- VÍDEOS -->
+            <a href="/videos" class="bloco videos">
+                <span>Vídeos</span>
+            </a>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
