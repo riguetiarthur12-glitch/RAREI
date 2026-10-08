@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Vídeos - R.A.R.E.I</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<header class="topo">
+
+    <h1>R.A.R.E.I</h1>
+
+</header>
+
+
+<h2 style="text-align:center; margin:30px;">
+    Vídeos capturados
+</h2>
+
+
+<div style="
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+    gap:25px;
+    padding:30px;
+">
+
+{% for arquivo in arquivos %}
+
+    <video
+        controls
+        style="
+            width:100%;
+            border:4px solid #111;
+        "
+    >
+
+        <source
+            src="{{ url_for('mostrar_video', filename=arquivo) }}"
+            type="video/mp4"
+        >
+
+    </video>
+
+{% else %}
+
+    <p>Nenhum vídeo recebido ainda.</p>
+
+{% endfor %}
+
+</div>
+
+
+</body>
+
+</html>
