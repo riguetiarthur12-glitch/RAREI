@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Admin - R.A.R.E.I
+    </title>
+
+    <style>
+
+        body {
+
+            margin: 0;
+
+            background: #222222;
+
+            font-family: Arial, sans-serif;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            height: 100vh;
+
+        }
+
+
+        .login {
+
+            width: 340px;
+
+            padding: 35px;
+
+            background: white;
+
+            border-radius: 8px;
+
+            text-align: center;
+
+        }
+
+
+        h1 {
+
+            margin-top: 0;
+
+        }
+
+
+        input {
+
+            width: 100%;
+
+            padding: 12px;
+
+            box-sizing: border-box;
+
+            font-size: 16px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        button {
+
+            width: 100%;
+
+            padding: 12px;
+
+            background: #91d7e8;
+
+            border: 0;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        .erro {
+
+            color: red;
+
+            margin-bottom: 15px;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="login">
+
+    <h1>
+        R.A.R.E.I
+    </h1>
+
+    <h3>
+        Administração
+    </h3>
+
+
+    {% if erro %}
+
+        <div class="erro">
+
+            {{ erro }}
+
+        </div>
+
+    {% endif %}
+
+
+    <form method="POST">
+
+        <input
+            type="password"
+            name="senha"
+            placeholder="Senha"
+            required
+        >
+
+        <button type="submit">
+
+            Entrar
+
+        </button>
+
+    </form>
+
+</div>
+
+
+</body>
+
+</html>
