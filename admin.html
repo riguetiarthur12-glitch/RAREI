@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Administração - R.A.R.E.I</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #eeeeee;
+            font-family: Arial, sans-serif;
+            color: #111;
+        }
+
+        header {
+            background: #91d7e8;
+            padding: 20px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            color: white;
+        }
+
+        header a {
+            color: #111;
+            font-weight: bold;
+            text-decoration: none;
+            background: white;
+            padding: 10px 18px;
+        }
+
+        main {
+            padding: 30px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            border-bottom: 3px solid #111;
+            padding-bottom: 8px;
+        }
+
+        .grade {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fill, minmax(250px, 1fr));
+
+            gap: 20px;
+        }
+
+        .item,
+        .analise {
+            background: white;
+            padding: 12px;
+            border: 2px solid #111;
+        }
+
+        .item img,
+        .item video {
+            width: 100%;
+            max-height: 250px;
+            object-fit: contain;
+            background: #111;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+
+            border: 0;
+            background: #d93434;
+            color: white;
+
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #b22222;
+        }
+
+        .analises-grade {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fill, minmax(320px, 1fr));
+
+            gap: 20px;
+        }
+
+        .analise-topo {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .analise img {
+            width: 120px;
+            height: 100px;
+            object-fit: cover;
+            border: 2px solid #111;
+            background: #222;
+        }
+
+        .analise h3 {
+            margin: 0 0 4px;
+            font-size: 21px;
+        }
+
+        .cientifico {
+            margin: 0;
+            font-style: italic;
+            color: #555;
+        }
+
+        .dados {
+            margin-top: 15px;
+        }
+
+        .dados p {
+            margin: 7px 0;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 8px;
+            font-weight: bold;
+            background: #ececec;
+        }
+
+        .catalogado_automaticamente {
+            background: #d7f5dc;
+        }
+
+        .aguardando_revisao {
+            background: #fff0b8;
+        }
+
+        .nao_identificado {
+            background: #f5d7d7;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>R.A.R.E.I ADMIN</h1>
+
+    <a href="/admin/sair">
+        Sair
+    </a>
+</header>
+
+<main>
+
+    <h2>Fotos</h2>
+
+    <div class="grade">
+
+        {% for arquivo in fotos %}
+
+        <div class="item">
+
+            <a
+                href="{{ url_for('mostrar_foto', filename=arquivo) }}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <img
+                    src="{{ url_for('mostrar_foto', filename=arquivo) }}"
+                    alt="Foto RAREI"
+                >
+            </a>
+
+            <form
+                method="POST"
+                action="{{ url_for('excluir_foto', filename=arquivo) }}"
+                onsubmit="return confirm('Excluir esta foto e as análises associadas?');"
+            >
+                <button type="submit">
+                    Excluir foto
+                </button>
+            </form>
+
+        </div>
+
+        {% else %}
+
+        <p>Nenhuma foto.</p>
+
+        {% endfor %}
+
+    </div>
+
+
+    <h2>Vídeos</h2>
+
+    <div class="grade">
+
+        {% for arquivo in videos %}
+
+        <div class="item">
+
+            <video controls>
+                <source
+                    src="{{ url_for('mostrar_video', filename=arquivo) }}"
+                    type="video/mp4"
+                >
+            </video>
+
+            <form
+                method="POST"
+                action="{{ url_for('excluir_video', filename=arquivo) }}"
+                onsubmit="return confirm('Excluir este vídeo?');"
+            >
+                <button type="submit">
+                    Excluir vídeo
+                </button>
+            </form>
+
+        </div>
+
+        {% else %}
+
+        <p>Nenhum vídeo.</p>
+
+        {% endfor %}
+
+    </div>
+
+
+    <h2>Análises da IA</h2>
+
+    <div class="analises-grade">
+
+        {% for analise in analises %}
+
+        <article class="analise">
+
+            <div class="analise-topo">
+
+                <a
+                    href="{{ url_for('mostrar_foto', filename=analise.arquivo) }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <img
+                        src="{{ url_for('mostrar_foto', filename=analise.arquivo) }}"
+                        alt="{{ analise.nome_comum_pt }}"
+                    >
+                </a>
+
+                <div>
+                    <h3>{{ analise.nome_comum_pt }}</h3>
+
+                    <p class="cientifico">
+                        {{ analise.nome_cientifico or "Não disponível" }}
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="dados">
+
+                <p>
+                    <strong>Confiança da espécie:</strong>
+                    {{ analise.confianca_especie_percentual }}%
+                </p>
+
+                <p>
+                    <strong>Confiança da detecção:</strong>
+                    {{ analise.confianca_deteccao_percentual }}%
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+
+                    <span class="status {{ analise.status }}">
+                        {{ analise.status }}
+                    </span>
+                </p>
+
+                <p>
+                    <strong>Data:</strong>
+                    {{ analise.data_hora }}
+                </p>
+
+                <p>
+                    <strong>Modelo:</strong>
+                    SpeciesNet {{ analise.modelo or "?" }}
+                </p>
+
+                <p>
+                    <strong>Fonte:</strong>
+                    {{ analise.fonte_predicao or "?" }}
+                </p>
+
+                <p>
+                    <strong>Arquivo:</strong>
+                    {{ analise.arquivo }}
+                </p>
+
+            </div>
+
+            <form
+                method="POST"
+                action="{{ url_for('excluir_analise', analise_id=analise.id) }}"
+                onsubmit="return confirm('Remover esta análise do catálogo/admin? A foto será mantida.');"
+            >
+                <button type="submit">
+                    Remover análise
+                </button>
+            </form>
+
+        </article>
+
+        {% else %}
+
+        <p>
+            Nenhuma análise da IA recebida ainda.
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+</main>
+
+</body>
+</html>
